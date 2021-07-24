@@ -1,0 +1,35 @@
+<html>
+<head>
+    <script>
+        function exec(cmd) {
+            fetch("/cmd?cmd=" + cmd)
+                .then(function (response) {
+                    let elementById = document.getElementById("response");
+                    response.text().then(function (text) {
+                        elementById.innerHTML = text;
+                        document.getElementById("cmd").value = "";
+                    });
+                })
+                .then(function (myJson) {
+                    console.log(myJson.ip);
+                })
+                .catch(function (error) {
+                    console.log("Error: " + error);
+                });
+        }
+        function kp(event) {
+            if (event.key == "Enter") {
+                exec(document.getElementById("cmd").value);
+
+            }
+        }
+    </script>
+</head>
+<h1>Welkom</h1>
+<label for="cmd">cmd</label>
+<input type="text" id="cmd" name="cmd" onkeypress="kp(event)">
+<button value="run" onclick="exec(cmd.value)">run</button>
+
+<p id="response"></p>
+
+</html>
